@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品版本发布说明</title>
+    <link rel="stylesheet" href="./all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            min-height: 85vh;
+        }
+        
+        /* 左侧版本列表样式 */
+        .version-list {
+            width: 300px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 25px 0;
+            overflow-y: auto;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .version-list-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .version-list h2 {
+            padding: 0 20px 20px;
+            font-weight: 600;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #3a506b;
+            margin-bottom: 15px;
+        }
+        
+        .version-item {
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .version-item:hover {
+            background-color: #3a506b;
+        }
+        
+        .version-item.active {
+            background-color: #34495e;
+            border-left-color: #3498db;
+            position: relative;
+        }
+        
+        .version-item.active::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent #f5f7fa;
+        }
+        
+        .version-number {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .version-date {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        .version-tag {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .version-tag.latest {
+            background-color: #2ecc71;
+        }
+        
+        .version-tag.beta {
+            background-color: #e74c3c;
+        }
+        
+        .version-tag.legacy {
+            background-color: #95a5a6;
+        }
+        
+        /* Logo区域样式 */
+        .logo-container {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #3a506b;
+            margin-top: auto;
+            background-color: #2c3e50;
+        }
+        
+        .logo-container h3 {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #ecf0f1;
+            font-weight: normal;
+            opacity: 0.8;
+        }
+        
+        .logo-img {
+            max-width: 80%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.03);
+        }
+        
+        /* 右侧内容区域样式 */
+        .content-area {
+            flex: 1;
+            padding: 30px 40px;
+            overflow-y: auto;
+        }
+        
+        .release-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .release-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .release-title h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+        }
+        
+        .release-date {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .release-summary {
+            color: #5d6d7e;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .release-content {
+            margin-top: 20px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h3 {
+            font-size: 1.3rem;
+            color: #3498db;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h3 i {
+            margin-right: 10px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .features-list, .improvements-list, .fixes-list {
+            list-style-type: none;
+        }
+        
+        .features-list li, .improvements-list li, .fixes-list li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 28px;
+        }
+        
+        .features-list li:before, .improvements-list li:before, .fixes-list li:before {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+        
+        .features-list li:before {
+            content: "\f0a3";
+            background-color: #2ecc71;
+        }
+        
+        .improvements-list li:before {
+            content: "\f062";
+            background-color: #3498db;
+        }
+        
+        .fixes-list li:before {
+            content: "\f024";
+            background-color: #e74c3c;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+        
+        .empty-state h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        /* 响应式设计 - 修改点：将900px改为600px */
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                margin: 10px;
+            }
+            
+            .version-list {
+                width: 100%;
+                max-height: 400px;
+            }
+            
+            .version-item.active::after {
+                display: none;
+            }
+            
+            .content-area {
+                padding: 25px;
+            }
+            
+            .logo-container {
+                padding: 15px;
+            }
+            
+            .logo-img {
+                max-width: 60%;
+            }
+        }
+        
+        /* 针对宽度在600-900之间的屏幕的额外调整 */
+        @media (min-width: 601px) and (max-width: 900px) {
+            .container {
+                margin: 15px;
+                max-width: 95%;
+            }
+            
+            .version-list {
+                width: 280px; /* 稍微减小左侧宽度 */
+            }
+            
+            .content-area {
+                padding: 25px 30px;
+            }
+            
+            .release-title h1 {
+                font-size: 1.7rem;
+            }
+        }
+        
+        /* 移动端特定样式（宽度小于等于600px） */
+        .mobile-version-selector {
+            display: none;
+            width: 100%;
+            padding: 15px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        
+        /* 移动端版本选择器只在宽度<=600px时显示 */
+        @media (max-width: 600px) {
+            .mobile-version-selector {
+                display: block;
+            }
+            
+            .version-list {
+                display: none;
+            }
+            
+            .version-list.show {
+                display: flex;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .release-content {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        
+        /* 移动端切换按钮只在宽度<=600px时显示 */
+        @media (max-width: 600px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .version-list h2 {
+                display: flex;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 移动端版本选择器（只在宽度<=600px时显示） -->
+    <select class="mobile-version-selector" id="mobileVersionSelector">
+        <option value="v3.2.0">v3.2.0 - 最新版 (2023年10月15日)</option>
+        <option value="v3.1.5">v3.1.5 - 稳定版 (2023年8月22日)</option>
+        <option value="v3.1.0">v3.1.0 - 稳定版 (2023年6月10日)</option>
+        <option value="v3.0.0">v3.0.0 - 里程碑 (2023年3月5日)</option>
+        <option value="v2.9.0">v2.9.0 - 旧版本 (2022年12月18日)</option>
+        <option value="v2.8.3">v2.8.3 - 旧版本 (2022年10月30日)</option>
+        <option value="v3.3.0-beta">v3.3.0-beta - 测试版 (2023年11月28日)</option>
+    </select>
+
+    <div class="container">
+        <!-- 左侧版本列表 -->
+        <div class="version-list" id="versionList">
+            <div class="version-list-content">
+                <h2>
+                    <button class="mobile-toggle" id="mobileToggle">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    版本历史
+                </h2>
+                <div class="version-item active" data-version="v3.2.0">
+                    <div>
+                        <div class="version-number">v3.2.0</div>
+                        <div class="version-date">2023年10月15日</div>
+                    </div>
+                    <span class="version-tag latest">最新版</span>
+                </div>
+                <div class="version-item" data-version="v3.1.5">
+                    <div>
+                        <div class="version-number">v3.1.5</div>
+                        <div class="version-date">2023年8月22日</div>
+                    </div>
+                    <span class="version-tag">稳定版</span>
+                </div>
+                <div class="version-item" data-version="v3.1.0">
+                    <div>
+                        <div class="version-number">v3.1.0</div>
+                        <div class="version-date">2023年6月10日</div>
+                    </div>
+                    <span class="version-tag">稳定版</span>
+                </div>
+                <div class="version-item" data-version="v3.0.0">
+                    <div>
+                        <div class="version-number">v3.0.0</div>
+                        <div class="version-date">2023年3月5日</div>
+                    </div>
+                    <span class="version-tag">里程碑</span>
+                </div>
+                <div class="version-item" data-version="v2.9.0">
+                    <div>
+                        <div class="version-number">v2.9.0</div>
+                        <div class="version-date">2022年12月18日</div>
+                    </div>
+                    <span class="version-tag legacy">旧版本</span>
+                </div>
+                <div class="version-item" data-version="v2.8.3">
+                    <div>
+                        <div class="version-number">v2.8.3</div>
+                        <div class="version-date">2022年10月30日</div>
+                    </div>
+                    <span class="version-tag legacy">旧版本</span>
+                </div>
+                <div class="version-item" data-version="v3.3.0-beta">
+                    <div>
+                        <div class="version-number">v3.3.0-beta</div>
+                        <div class="version-date">2023年11月28日</div>
+                    </div>
+                    <span class="version-tag beta">测试版</span>
+                </div>
+            </div>
+            
+            <!-- Logo区域 -->
+            <div class="logo-container">
+                <h3>产品标识</h3>
+                <!-- 这里使用本地logo.png文件 -->
+                <!-- <img src="logo.png" alt="产品Logo" class="logo-img" id="logoImage">  -->
+                <!-- 备用方案：如果本地图片不存在，显示默认占位符 -->
+                <!-- <noscript>
+                    <div style="color: #ecf0f1; font-size: 0.8rem; margin-top: 10px;">
+                        无法加载logo.png图片
+                    </div>
+                </noscript>  -->
+            </div>
+        </div>
+        
+        <!-- 右侧内容区域 -->
+        <div class="content-area">
+            <!-- 默认显示最新版本 -->
+            <div class="release-header">
+                <div class="release-title">
+                    <h1>版本 3.2.0 - "北极星"</h1>
+                    <span class="version-tag latest">最新版</span>
+                </div>
+                <div class="release-date">发布日期：2023年10月15日</div>
+                <p class="release-summary">
+                    此版本引入了全新的数据分析面板、性能优化以及多项用户体验改进。这是我们迄今为止最稳定、功能最丰富的版本。
+                </p>
+            </div>
+            
+            <div class="release-content">
+                <div class="section">
+                    <h3><i class="fas fa-star"></i> 新功能</h3>
+                    <ul class="features-list">
+                        <li>全新的数据分析面板，支持自定义报表和实时数据可视化</li>
+                        <li>添加团队协作功能，支持多人同时编辑和评论</li>
+                        <li>引入智能预测模块，基于机器学习提供业务趋势预测</li>
+                        <li>新增API v2接口，提供更高效的数据访问方式</li>
+                        <li>支持深色模式，可根据系统设置或手动切换主题</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3><i class="fas fa-chart-line"></i> 改进与优化</h3>
+                    <ul class="improvements-list">
+                        <li>数据库查询性能提升40%，大幅减少页面加载时间</li>
+                        <li>优化移动端界面，提升小屏幕设备上的使用体验</li>
+                        <li>重构用户权限系统，提供更细粒度的访问控制</li>
+                        <li>改进数据导入流程，支持更多文件格式和自动映射</li>
+                        <li>增强通知系统，支持自定义提醒规则和推送渠道</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3><i class="fas fa-bug"></i> 问题修复</h3>
+                    <ul class="fixes-list">
+                        <li>修复导出PDF时格式错乱的问题</li>
+                        <li>修复在某些浏览器中图表渲染异常的问题</li>
+                        <li>修复时区设置导致的数据显示错误</li>
+                        <li>修复批量操作时可能发生的重复提交问题</li>
+                        <li>修复内存泄漏问题，提升应用稳定性</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 其他版本内容占位符 -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-code-branch"></i>
+                <h2>选择版本查看详情</h2>
+                <p>点击左侧列表中的版本号查看该版本的详细发布说明</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 版本数据
+        const versionData = {
+            "v3.2.0": {
+                title: "版本 3.2.0 - \"北极星\"",
+                date: "2023年10月15日",
+                tag: "latest",
+                summary: "此版本引入了全新的数据分析面板、性能优化以及多项用户体验改进。这是我们迄今为止最稳定、功能最丰富的版本。",
+                features: [
+                    "全新的数据分析面板，支持自定义报表和实时数据可视化",
+                    "添加团队协作功能，支持多人同时编辑和评论",
+                    "引入智能预测模块，基于机器学习提供业务趋势预测",
+                    "新增API v2接口，提供更高效的数据访问方式",
+                    "支持深色模式，可根据系统设置或手动切换主题"
+                ],
+                improvements: [
+                    "数据库查询性能提升40%，大幅减少页面加载时间",
+                    "优化移动端界面，提升小屏幕设备上的使用体验",
+                    "重构用户权限系统，提供更细粒度的访问控制",
+                    "改进数据导入流程，支持更多文件格式和自动映射",
+                    "增强通知系统，支持自定义提醒规则和推送渠道"
+                ],
+                fixes: [
+                    "修复导出PDF时格式错乱的问题",
+                    "修复在某些浏览器中图表渲染异常的问题",
+                    "修复时区设置导致的数据显示错误",
+                    "修复批量操作时可能发生的重复提交问题",
+                    "修复内存泄漏问题，提升应用稳定性"
+                ]
+            },
+            "v3.1.5": {
+                title: "版本 3.1.5",
+                date: "2023年8月22日",
+                tag: "stable",
+                summary: "这是一个维护版本，主要包含性能优化和问题修复，提高了系统的稳定性和安全性。",
+                features: [
+                    "新增数据备份与恢复向导，简化系统迁移流程",
+                    "添加快捷键支持，提升高级用户的操作效率"
+                ],
+                improvements: [
+                    "优化内存使用，减少大型数据集处理时的资源占用",
+                    "改进搜索算法，提升复杂查询的响应速度",
+                    "增强数据导出功能，支持更多格式选项"
+                ],
+                fixes: [
+                    "修复安全漏洞，提升系统安全性",
+                    "修复数据同步时可能出现的冲突问题",
+                    "修复用户界面中的多个本地化问题"
+                ]
+            },
+            "v3.1.0": {
+                title: "版本 3.1.0 - \"曙光\"",
+                date: "2023年6月10日",
+                tag: "stable",
+                summary: "此版本引入了全新的报告生成器和增强的集成功能，为企业用户提供了更强大的数据分析工具。",
+                features: [
+                    "全新报告生成器，支持拖拽式报表设计",
+                    "新增与第三方CRM系统的双向同步",
+                    "添加数据质量检查工具，自动识别数据问题"
+                ],
+                improvements: [
+                    "用户界面全面更新，采用现代化设计语言",
+                    "API响应时间平均减少30%",
+                    "改进移动端适配，支持更多手势操作"
+                ],
+                fixes: [
+                    "修复数据导入时的编码问题",
+                    "修复图表工具提示显示异常的问题",
+                    "修复在特定网络环境下上传失败的问题"
+                ]
+            },
+            "v3.0.0": {
+                title: "版本 3.0.0 - \"里程碑\"",
+                date: "2023年3月5日",
+                tag: "milestone",
+                summary: "这是产品的一个重要里程碑版本，引入了全新的架构和多项核心功能重构，为未来发展奠定基础。",
+                features: [
+                    "全新微服务架构，提升系统可扩展性",
+                    "引入实时协作编辑功能",
+                    "新增高级权限管理系统",
+                    "支持自定义工作流程"
+                ],
+                improvements: [
+                    "系统性能提升50%",
+                    "完全重构的后台管理界面",
+                    "增强的数据安全性措施"
+                ],
+                fixes: [
+                    "修复了v2.x系列中的多个遗留问题",
+                    "解决了高并发场景下的稳定性问题"
+                ]
+            },
+            "v2.9.0": {
+                title: "版本 2.9.0",
+                date: "2022年12月18日",
+                tag: "legacy",
+                summary: "这是2.x系列的最后一个版本，包含了一些必要的功能更新和问题修复。",
+                features: [
+                    "新增基础数据分析功能",
+                    "添加简单的报告导出功能"
+                ],
+                improvements: [
+                    "优化了用户界面响应速度",
+                    "改进了数据导入的稳定性"
+                ],
+                fixes: [
+                    "修复了已知的安全问题",
+                    "修复了数据导出时的格式问题"
+                ]
+            },
+            "v2.8.3": {
+                title: "版本 2.8.3",
+                date: "2022年10月30日",
+                tag: "legacy",
+                summary: "这是一个维护版本，主要修复了用户反馈的一些关键问题。",
+                features: [],
+                improvements: [
+                    "改进了错误处理机制",
+                    "优化了移动端显示效果"
+                ],
+                fixes: [
+                    "修复了登录页面在特定浏览器的兼容性问题",
+                    "修复了数据缓存导致的信息过期问题",
+                    "修复了多个界面显示问题"
+                ]
+            },
+            "v3.3.0-beta": {
+                title: "版本 3.3.0-beta",
+                date: "2023年11月28日",
+                tag: "beta",
+                summary: "这是3.3.0的测试版本，引入了人工智能辅助功能和全新的插件系统，欢迎测试并提供反馈。",
+                features: [
+                    "引入AI助手，支持自然语言查询数据分析",
+                    "全新插件系统，支持第三方功能扩展",
+                    "新增自动化工作流引擎"
+                ],
+                improvements: [
+                    "UI/UX全面优化，提升用户体验",
+                    "API文档全面更新，增加更多示例",
+                    "改进多语言支持，新增3种语言"
+                ],
+                fixes: [
+                    "修复了beta测试中发现的多项界面问题",
+                    "解决了插件系统的兼容性问题"
+                ]
+            }
+        };
+        
+        // DOM元素
+        const versionItems = document.querySelectorAll('.version-item');
+        const mobileVersionSelector = document.getElementById('mobileVersionSelector');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const versionList = document.getElementById('versionList');
+        const emptyState = document.getElementById('emptyState');
+        const logoImage = document.getElementById('logoImage');
+        
+        // 检查本地logo图片是否存在，如果不存在则显示默认占位符
+        function checkLogoImage() {
+            // 设置一个备用图片URL（可以是base64编码的简单图片）
+            const fallbackLogo = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDIwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTAwIiByeD0iNiIgZmlsbD0iIzM0OThEQiIvPgo8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkxvZ28gSW1hZ2U8L3RleHQ+Cjx0ZXh0IHg9IjUwJSIgeT0iNjUlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+KGxvZ28ucG5nKTwvdGV4dD4KPC9zdmc+";
+            
+            // 图片加载失败时的处理
+            logoImage.onerror = function() {
+                console.log("无法加载logo.png，使用备用图片");
+                this.src = fallbackLogo;
+                this.alt = "默认Logo（找不到logo.png）";
+            };
+            
+            // 图片加载成功时的处理
+            logoImage.onload = function() {
+                console.log("logo.png加载成功");
+            };
+        }
+        
+        // 检查当前是否为移动端（宽度<=600px）
+        function isMobile() {
+            return window.innerWidth <= 600;
+        }
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查logo图片
+            checkLogoImage();
+            
+            // 为每个版本项添加点击事件
+            versionItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 更新左侧列表的选中状态
+                    versionItems.forEach(v => v.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 获取版本号
+                    const version = this.getAttribute('data-version');
+                    
+                    // 更新移动端选择器
+                    mobileVersionSelector.value = version;
+                    
+                    // 更新右侧内容
+                    updateContent(version);
+                    
+                    // 在移动端点击后隐藏版本列表（只在宽度<=600px时）
+                    if (isMobile()) {
+                        versionList.classList.remove('show');
+                    }
+                });
+            });
+            
+            // 移动端版本选择器事件
+            mobileVersionSelector.addEventListener('change', function() {
+                const version = this.value;
+                
+                // 更新左侧列表的选中状态
+                versionItems.forEach(v => {
+                    v.classList.remove('active');
+                    if (v.getAttribute('data-version') === version) {
+                        v.classList.add('active');
+                    }
+                });
+                
+                // 更新右侧内容
+                updateContent(version);
+            });
+            
+            // 移动端切换按钮事件
+            mobileToggle.addEventListener('click', function() {
+                versionList.classList.toggle('show');
+                // 更新图标
+                const icon = this.querySelector('i');
+                if (versionList.classList.contains('show')) {
+                    icon.classList.remove('fa-chevron-left');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-left');
+                }
+            });
+            
+            // 监听窗口大小变化
+            window.addEventListener('resize', function() {
+                // 如果从移动端切换到桌面端（宽度>600px），确保版本列表显示
+                if (!isMobile()) {
+                    versionList.classList.add('show');
+                }
+            });
+        });
+        
+        // 更新右侧内容区域
+        function updateContent(version) {
+            const data = versionData[version];
+            const contentArea = document.querySelector('.content-area');
+            
+            if (!data) {
+                emptyState.style.display = 'block';
+                document.querySelector('.release-header').style.display = 'none';
+                document.querySelector('.release-content').style.display = 'none';
+                return;
+            }
+            
+            // 显示内容区域
+            emptyState.style.display = 'none';
+            document.querySelector('.release-header').style.display = 'block';
+            document.querySelector('.release-content').style.display = 'block';
+            
+            // 更新标题区域
+            const header = document.querySelector('.release-header');
+            header.querySelector('h1').textContent = data.title;
+            header.querySelector('.release-date').textContent = `发布日期：${data.date}`;
+            header.querySelector('.release-summary').textContent = data.summary;
+            
+            // 更新标签
+            const tag = header.querySelector('.version-tag');
+            tag.className = 'version-tag';
+            tag.classList.add(data.tag);
+            
+            if (data.tag === 'latest') {
+                tag.textContent = '最新版';
+            } else if (data.tag === 'stable') {
+                tag.textContent = '稳定版';
+            } else if (data.tag === 'milestone') {
+                tag.textContent = '里程碑';
+            } else if (data.tag === 'legacy') {
+                tag.textContent = '旧版本';
+            } else if (data.tag === 'beta') {
+                tag.textContent = '测试版';
+            }
+            
+            // 更新功能列表
+            const featuresList = document.querySelector('.features-list');
+            featuresList.innerHTML = '';
+            if (data.features.length > 0) {
+                data.features.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    featuresList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = '此版本没有新增功能';
+                featuresList.appendChild(li);
+            }
+            
+            // 更新改进列表
+            const improvementsList = document.querySelector('.improvements-list');
+            improvementsList.innerHTML = '';
+            if (data.improvements.length > 0) {
+                data.improvements.forEach(improvement => {
+                    const li = document.createElement('li');
+                    li.textContent = improvement;
+                    improvementsList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = '此版本没有改进与优化';
+                improvementsList.appendChild(li);
+            }
+            
+            // 更新修复列表
+            const fixesList = document.querySelector('.fixes-list');
+            fixesList.innerHTML = '';
+            if (data.fixes.length > 0) {
+                data.fixes.forEach(fix => {
+                    const li = document.createElement('li');
+                    li.textContent = fix;
+                    fixesList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = '此版本没有问题修复';
+                fixesList.appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻资讯 - XXXXXX塑胶制品科技有限公司</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <style>
+        /* ========== Sub-page Banner ========== */
+        .sub-banner {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        .sub-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .sub-banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,86,179,0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sub-banner-text {
+            text-align: center;
+            color: #fff;
+        }
+        .sub-banner-text h2 {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        }
+        .sub-banner-text p {
+            font-size: 16px;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        /* ========== Breadcrumb ========== */
+        .breadcrumb {
+            background: #f8f9fa;
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        .breadcrumb a {
+            color: #0056b3;
+            transition: color 0.3s;
+        }
+        .breadcrumb a:hover {
+            color: #e74c3c;
+        }
+        .breadcrumb span {
+            color: #999;
+            margin: 0 8px;
+        }
+        .breadcrumb .current {
+            color: #333;
+        }
+
+        /* ========== Sub-page Content Layout ========== */
+        .sub-page-content {
+            padding: 40px 0;
+            background: #fff;
+        }
+        .sub-page-layout {
+            display: flex;
+            gap: 30px;
+        }
+        .sub-page-main {
+            flex: 1;
+            min-width: 0;
+        }
+        .sub-page-sidebar {
+            flex: 0 0 280px;
+        }
+
+        /* ========== News List Tabs ========== */
+        .news-list-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+        .news-list-tab-btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .news-list-tab-btn.active {
+            color: #0056b3;
+        }
+        .news-list-tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #0056b3;
+        }
+        .news-list-tab-btn:hover:not(.active) {
+            color: #0056b3;
+        }
+        .news-list-panel {
+            display: none;
+        }
+        .news-list-panel.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* ========== News List Items ========== */
+        .news-list-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+        .news-list-item:hover {
+            background: #f8f9fa;
+        }
+        .news-list-item .news-date {
+            flex: 0 0 70px;
+            text-align: center;
+            padding: 10px 0;
+            background: #f0f6ff;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .news-list-item .date-day {
+            display: block;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0056b3;
+            line-height: 1;
+        }
+        .news-list-item .date-month {
+            display: block;
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+        .news-list-item .news-thumb {
+            flex: 0 0 180px;
+            height: 120px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .news-list-item .news-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .news-list-item:hover .news-thumb img {
+            transform: scale(1.05);
+        }
+        .news-list-item .news-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .news-list-item .news-info h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .news-list-item .news-info h3 a {
+            color: #333;
+            transition: color 0.3s;
+        }
+        .news-list-item .news-info h3 a:hover {
+            color: #0056b3;
+        }
+        .news-list-item .news-info p {
+            font-size: 14px;
+            color: #999;
+            line-height: 1.7;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .news-list-item .news-info .news-meta {
+            font-size: 13px;
+            color: #bbb;
+            margin-top: 8px;
+        }
+
+        /* ========== Sidebar ========== */
+        .sidebar-box {
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            background: #0056b3;
+            padding: 12px 20px;
+            position: relative;
+        }
+        .sidebar-title::after {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+        }
+        .sidebar-content {
+            padding: 15px 20px;
+        }
+        .sidebar-links a {
+            display: block;
+            padding: 10px 0;
+            font-size: 14px;
+            color: #555;
+            border-bottom: 1px dashed #eee;
+            transition: all 0.3s;
+        }
+        .sidebar-links a:last-child {
+            border-bottom: none;
+        }
+        .sidebar-links a:hover {
+            color: #0056b3;
+            padding-left: 5px;
+        }
+        .sidebar-links a::before {
+            content: '>';
+            color: #0056b3;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+        .sidebar-hotline {
+            text-align: center;
+            padding: 20px;
+        }
+        .sidebar-hotline-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 12px;
+            background: #f0f6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sidebar-hotline-icon img {
+            width: 28px;
+            height: 28px;
+        }
+        .sidebar-hotline-number {
+            font-size: 22px;
+            font-weight: 700;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .sidebar-hotline-note {
+            font-size: 12px;
+            color: #999;
+        }
+        .sidebar-recommend-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .sidebar-recommend-item:last-child {
+            border-bottom: none;
+        }
+        .sidebar-recommend-thumb {
+            flex: 0 0 80px;
+            height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .sidebar-recommend-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .sidebar-recommend-info h4 {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .sidebar-recommend-info h4 a {
+            color: #333;
+            transition: color 0.3s;
+        }
+        .sidebar-recommend-info h4 a:hover {
+            color: #0056b3;
+        }
+        .sidebar-recommend-info .sidebar-date {
+            font-size: 12px;
+            color: #bbb;
+            margin-top: 4px;
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 992px) {
+            .sub-banner { height: 220px; }
+            .sub-banner-text h2 { font-size: 28px; }
+            .sub-page-layout { flex-direction: column; }
+            .sub-page-sidebar { flex: none; }
+        }
+        @media (max-width: 768px) {
+            .sub-banner { height: 180px; }
+            .sub-banner-text h2 { font-size: 24px; }
+            .sub-banner-text p { font-size: 14px; }
+            .news-list-item { flex-direction: column; gap: 12px; }
+            .news-list-item .news-thumb { flex: none; height: 180px; width: 100%; }
+            .news-list-item .news-date { flex: none; width: 100%; padding: 8px; }
+            .news-list-item .news-date .date-day { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 顶部工具栏 -->
+<div class="top-bar">
+    <div class="container">
+        <div class="top-bar-left">
+            <span class="hot-keywords">热门关键词：</span>
+            <a href="../index.html#moju">模具设计制造</a>
+            <a href="../index.html#zhusu">注塑加工量产</a>
+            <a href="../index.html#zhusu">组装加工装配</a>
+        </div>
+        <div class="top-bar-right">
+            <a href="../index.html#sitemap">网站地图</a>
+            <a href="../index.html#contact">在线留言</a>
+            <a href="../index.html#contact">联系我们</a>
+        </div>
+    </div>
+</div>
+
+<!-- 主头部：Logo + 电话 -->
+<header class="main-header">
+    <div class="container">
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../images/logo.png" alt="XXXXXX塑胶制品科技有限公司">
+                <span class="logo-text">XXXXXX塑胶制品科技有限公司</span>
+            </a>
+        </div>
+        <div class="header-phone">
+            <img src="../images/phone-icon.png" alt="电话图标">
+            <div class="phone-info">
+                <span class="phone-number">13929464938</span>
+                <span class="phone-note">(微信同号)</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 主导航栏 -->
+<nav class="main-nav">
+    <div class="container">
+        <button class="menu-toggle" id="menuToggle" aria-label="菜单">☰</button>
+        <ul class="nav-list" id="navList">
+            <li><a href="../index.html">网站首页</a></li>
+            <li><a href="../index.html#moju">模具制造</a></li>
+            <li><a href="../index.html#zhusu">注塑加工</a></li>
+            <li><a href="../index.html#product">小家电</a></li>
+            <li><a href="../index.html#case">汽车用品</a></li>
+            <li><a href="../index.html#yiliao">医疗用品</a></li>
+            <li><a href="../index.html#zhineng">智能家居</a></li>
+            <li><a href="../index.html#other">亚克力产品</a></li>
+            <li><a href="../index.html#video">技术方案</a></li>
+            <li class="has-dropdown active">
+                <a href="index.html">新闻资讯</a>
+                <ul class="dropdown">
+                    <li><a href="#tab-company">公司新闻</a></li>
+                    <li><a href="#tab-industry">行业动态</a></li>
+                    <li><a href="#tab-faq">常见问题</a></li>
+                </ul>
+            </li>
+            <li class="has-dropdown">
+                <a href="../index.html#about">关于XXXXXX</a>
+                <ul class="dropdown">
+                    <li><a href="../index.html#about-01">公司简介</a></li>
+                    <li><a href="../index.html#about-02">专利证书</a></li>
+                    <li><a href="../index.html#about-03">合作客户</a></li>
+                    <li><a href="../index.html#about-04">发展历程</a></li>
+                    <li><a href="../index.html#about-05">公司优势</a></li>
+                    <li><a href="../index.html#about-06">生产环境</a></li>
+                    <li><a href="../index.html#about-07">联系我们</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- 子页面Banner -->
+<section class="sub-banner">
+    <img src="../images/banner-news.jpg" alt="新闻资讯">
+    <div class="sub-banner-overlay">
+        <div class="sub-banner-text">
+            <h2>新闻资讯</h2>
+            <p>NEWS AND INFORMATION</p>
+        </div>
+    </div>
+</section>
+
+<!-- 面包屑导航 -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="../index.html">首页</a>
+        <span>&gt;</span>
+        <span class="current">新闻资讯</span>
+    </div>
+</div>
+
+<!-- 新闻内容区域 -->
+<section class="sub-page-content">
+    <div class="container">
+        <div class="sub-page-layout">
+            <!-- 左侧：新闻内容 -->
+            <div class="sub-page-main">
+                <div class="news-list-tabs">
+                    <button class="news-list-tab-btn active" data-tab="tab-company">公司新闻</button>
+                    <button class="news-list-tab-btn" data-tab="tab-industry">行业动态</button>
+                    <button class="news-list-tab-btn" data-tab="tab-faq">常见问题</button>
+                </div>
+
+                <!-- 公司新闻 -->
+                <div class="news-list-panel active" id="tab-company">
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">18</span>
+                            <span class="date-month">2025-01</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news1.jpg" alt="XXXXXX2024年团年晚宴">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">XXXXXX2024年团年晚宴：共赴盛宴，展望未来</a></h3>
+                            <p>2024年团年晚宴隆重举办，全体员工齐聚一堂，回顾过去一年的成长与收获，展望新一年的发展蓝图。</p>
+                            <div class="news-meta">2025-01-18</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">20</span>
+                            <span class="date-month">2024-09</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news2.jpg" alt="员工生日庆祝活动">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">员工生日庆祝活动</a></h3>
+                            <p>公司为员工举办温馨生日庆祝活动，增进团队凝聚力，体现企业文化关怀。</p>
+                            <div class="news-meta">2024-09-20</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">15</span>
+                            <span class="date-month">2024-09</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news3.jpg" alt="中秋节团圆聚会">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">中秋节团圆聚会</a></h3>
+                            <p>中秋佳节，公司组织员工团圆聚会，共度传统节日，传递温暖与祝福。</p>
+                            <div class="news-meta">2024-09-15</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">18</span>
+                            <span class="date-month">2024-02</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news1.jpg" alt="24周年庆典">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">24周年庆典</a></h3>
+                            <p>XXXXXX公司24周年庆典隆重举行，回顾24年发展历程，感恩一路同行。</p>
+                            <div class="news-meta">2024-02-18</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">20</span>
+                            <span class="date-month">2022-01</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news2.jpg" alt="XXXXXX公司2022尾牙晚会">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">XXXXXX公司2022尾牙晚会</a></h3>
+                            <p>2022尾牙晚会精彩纷呈，员工欢聚一堂，共迎新年。</p>
+                            <div class="news-meta">2022-01-20</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 行业动态 -->
+                <div class="news-list-panel" id="tab-industry">
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">08</span>
+                            <span class="date-month">08月</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news1.jpg" alt="注塑模具质量决定产品质量">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">为你解析塑胶产品质量的"基因"密码——注塑模具</a></h3>
+                            <p>注塑模具质量决定产品质量，深入解析模具设计与制造对塑胶产品品质的关键影响。</p>
+                            <div class="news-meta">注塑模具质量决定产品质量</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">07</span>
+                            <span class="date-month">07月</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news2.jpg" alt="提升注塑加工制造业竞争力">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">深度解析：如何提升注塑加工制造业中小企业的市场竞争力？</a></h3>
+                            <p>从技术升级、品质管控、成本优化等多角度分析中小企业提升竞争力的有效策略。</p>
+                            <div class="news-meta">提升竞争力策略</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">06</span>
+                            <span class="date-month">06月</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news3.jpg" alt="模具进胶方式提升生产效率">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">详述注塑模具进胶方式：突破传统，提升生产效率</a></h3>
+                            <p>详解各类模具进胶方式的优缺点及适用场景，帮助企业选择最优方案提升生产效率。</p>
+                            <div class="news-meta">模具进胶方式影响生产效率</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">05</span>
+                            <span class="date-month">05月</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news1.jpg" alt="高光镜面模具制造难点与方案">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">高光镜面模具制造的难点与解决方案</a></h3>
+                            <p>探讨高光镜面注塑模具在制造过程中的技术难点及行业解决方案，助力品质提升。</p>
+                            <div class="news-meta">技术难点与行业方案</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 常见问题 -->
+                <div class="news-list-panel" id="tab-faq">
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">01</span>
+                            <span class="date-month">FAQ</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news3.jpg" alt="亚克力透明件进胶印解决方案">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">亚克力/PMMA透明件进胶印解决方案</a></h3>
+                            <p>针对亚克力及PMMA透明件注塑过程中常见的进胶印缺陷，提供5步系统化控制方案。</p>
+                            <div class="news-meta">5步缺陷控制</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">02</span>
+                            <span class="date-month">FAQ</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news2.jpg" alt="PC透明件进胶印排查">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">PC透明件进胶印问题排查</a></h3>
+                            <p>系统排查PC透明件注塑进胶印问题的产生原因，提供工艺优化建议与解决方案。</p>
+                            <div class="news-meta">PC透明件工艺优化</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">03</span>
+                            <span class="date-month">FAQ</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news1.jpg" alt="提高厚壁塑胶件透明度">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">如何提高厚壁塑胶件的透明度</a></h3>
+                            <p>从材料选择、模具设计、注塑工艺参数等维度详解厚壁塑胶件透明度提升方法。</p>
+                            <div class="news-meta">厚壁件工艺方法</div>
+                        </div>
+                    </div>
+                    <div class="news-list-item">
+                        <div class="news-date">
+                            <span class="date-day">04</span>
+                            <span class="date-month">FAQ</span>
+                        </div>
+                        <div class="news-thumb">
+                            <img src="../images/news3.jpg" alt="PMMA透明件缺陷控制技术">
+                        </div>
+                        <div class="news-info">
+                            <h3><a href="#">PMMA透明件缺陷控制技术</a></h3>
+                            <p>分享PMMA亚克力透明件注塑加工中的缺陷控制技术与实用技巧，确保产品品质。</p>
+                            <div class="news-meta">亚克力加工技巧</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：侧边栏 -->
+            <div class="sub-page-sidebar">
+                <!-- 产品定制 -->
+                <div class="sidebar-box">
+                    <div class="sidebar-title">产品定制</div>
+                    <div class="sidebar-content sidebar-links">
+                        <a href="../index.html#moju">模具设计制造</a>
+                        <a href="../index.html#zhusu">注塑加工量产</a>
+                        <a href="../index.html#zhusu">组装加工装配</a>
+                        <a href="../index.html#product">小家电定制</a>
+                        <a href="../index.html#case">汽车用品定制</a>
+                        <a href="../index.html#yiliao">医疗用品定制</a>
+                        <a href="../index.html#zhineng">智能家居定制</a>
+                        <a href="../index.html#other">亚克力产品定制</a>
+                    </div>
+                </div>
+
+                <!-- 全国服务热线 -->
+                <div class="sidebar-box">
+                    <div class="sidebar-title">全国服务热线</div>
+                    <div class="sidebar-content sidebar-hotline">
+                        <div class="sidebar-hotline-icon">
+                            <img src="../images/phone-icon.png" alt="电话图标">
+                        </div>
+                        <div class="sidebar-hotline-number">13929464938</div>
+                        <div class="sidebar-hotline-note">(微信同号)</div>
+                    </div>
+                </div>
+
+                <!-- 推荐资讯 -->
+                <div class="sidebar-box">
+                    <div class="sidebar-title">推荐资讯</div>
+                    <div class="sidebar-content">
+                        <div class="sidebar-recommend-item">
+                            <div class="sidebar-recommend-thumb">
+                                <img src="../images/news1.jpg" alt="高光镜面模具制造">
+                            </div>
+                            <div class="sidebar-recommend-info">
+                                <h4><a href="#">高光镜面模具制造的难点与解决方案</a></h4>
+                                <div class="sidebar-date">2025-01-18</div>
+                            </div>
+                        </div>
+                        <div class="sidebar-recommend-item">
+                            <div class="sidebar-recommend-thumb">
+                                <img src="../images/news2.jpg" alt="注塑加工竞争力">
+                            </div>
+                            <div class="sidebar-recommend-info">
+                                <h4><a href="#">深度解析：如何提升注塑加工制造业中小企业的市场竞争力？</a></h4>
+                                <div class="sidebar-date">2024-09-20</div>
+                            </div>
+                        </div>
+                        <div class="sidebar-recommend-item">
+                            <div class="sidebar-recommend-thumb">
+                                <img src="../images/news3.jpg" alt="亚克力透明件进胶印">
+                            </div>
+                            <div class="sidebar-recommend-info">
+                                <h4><a href="#">亚克力/PMMA透明件进胶印解决方案</a></h4>
+                                <div class="sidebar-date">FAQ专题</div>
+                            </div>
+                        </div>
+                        <div class="sidebar-recommend-item">
+                            <div class="sidebar-recommend-thumb">
+                                <img src="../images/news1.jpg" alt="24周年庆典">
+                            </div>
+                            <div class="sidebar-recommend-info">
+                                <h4><a href="#">XXXXXX2024年团年晚宴：共赴盛宴，展望未来</a></h4>
+                                <div class="sidebar-date">2025-01-18</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 友情链接 -->
+<section class="friendly-links">
+    <div class="container">
+        <h3>友情链接</h3>
+        <div class="links-list">
+            <a href="#">接触角测量仪</a>
+            <a href="#">亚克力注塑</a>
+            <a href="#">锌合金压铸</a>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="main-footer" id="contact">
+    <div class="container">
+        <div class="footer-columns">
+            <div class="footer-col">
+                <h4>XXXXXX塑胶制品科技有限公司</h4>
+                <p><span class="label">电话：</span>0769-85348387</p>
+                <p><span class="label">手机：</span>13929464938 (微信同号)</p>
+                <p><span class="label">传真：</span>85348397</p>
+                <p><span class="label">邮箱：</span>xhyw08@gdxiehong.com</p>
+                <p><span class="label">联系地址：</span>东莞市长安镇振安科技园XXXXXX厂</p>
+            </div>
+            <div class="footer-col">
+                <h4>底部导航</h4>
+                <a href="../index.html#zhusu">注塑加工</a>
+                <a href="../index.html#moju">模具制造</a>
+                <a href="../index.html#yiliao">医疗用品</a>
+                <a href="../index.html#case">汽车用品</a>
+                <a href="../index.html#about">关于我们</a>
+                <a href="../index.html#contact">在线留言</a>
+                <a href="../index.html#contact">联系我们</a>
+            </div>
+            <div class="footer-col">
+                <h4>热门关键词</h4>
+                <a href="#">模具设计制造</a>
+                <a href="#">注塑加工量产</a>
+                <a href="#">组装加工装配</a>
+            </div>
+            <div class="footer-col footer-qr">
+                <h4>微信咨询</h4>
+                <div class="qr-code">
+                    <img src="../images/wechat-qr.png" alt="微信二维码">
+                </div>
+                <p>扫一扫添加微信</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>Copyright &copy; 2021 XXXXXX塑胶制品科技有限公司 版权所有</p>
+            <p><a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备07012005号</a> | 技术支持：<a href="#">米可网络</a></p>
+        </div>
+    </div>
+</footer>
+
+<!-- 侧边浮动工具栏 -->
+<div class="floating-toolbar">
+    <a href="#" class="float-btn back-top" id="backTop" title="返回顶部">
+        <span>&uarr;</span>
+        <small>返回顶部</small>
+    </a>
+    <a href="tel:13929464938" class="float-btn phone-btn" title="电话咨询">
+        <span>&#9742;</span>
+        <small>13929464938<br>(微信同号)</small>
+    </a>
+    <a href="#" class="float-btn qq-btn" title="QQ在线咨询">
+        <span>QQ</span>
+        <small>在线咨询</small>
+    </a>
+    <div class="float-btn wechat-btn" title="微信咨询">
+        <span>微</span>
+        <small>微信咨询</small>
+        <div class="wechat-popup">
+            <img src="../images/wechat-qr.png" alt="微信二维码">
+            <p>扫码添加微信</p>
+        </div>
+    </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script>
+(function() {
+    'use strict';
+    // News sub-page tab switching
+    var tabBtns = document.querySelectorAll('.news-list-tab-btn');
+    var panels = document.querySelectorAll('.news-list-panel');
+    if (tabBtns.length > 0) {
+        tabBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var targetId = btn.getAttribute('data-tab');
+                tabBtns.forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                panels.forEach(function(p) { p.classList.remove('active'); });
+                var targetPanel = document.getElementById(targetId);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+            });
+        });
+    }
+})();
+</script>
+</body>
+</html>

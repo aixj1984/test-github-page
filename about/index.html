@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于XXXXXX - XXXXXX塑胶制品科技有限公司</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <style>
+        /* ========== Sub-page Banner ========== */
+        .sub-banner {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        .sub-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .sub-banner-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,86,179,0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sub-banner-overlay h2 {
+            font-size: 36px;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
+        }
+
+        /* ========== Breadcrumb ========== */
+        .breadcrumb {
+            background: #f5f5f5;
+            padding: 12px 0;
+            font-size: 14px;
+            color: #888;
+            border-bottom: 1px solid #eee;
+        }
+        .breadcrumb a {
+            color: #0056b3;
+            transition: color 0.3s;
+        }
+        .breadcrumb a:hover {
+            color: #e74c3c;
+        }
+        .breadcrumb .sep {
+            margin: 0 6px;
+            color: #ccc;
+        }
+
+        /* ========== Sub-page Layout ========== */
+        .sub-page-layout {
+            display: flex;
+            gap: 30px;
+            padding: 40px 0;
+            background: #fff;
+        }
+        .sub-main {
+            flex: 1;
+            min-width: 0;
+        }
+        .sub-sidebar {
+            flex: 0 0 250px;
+        }
+
+        /* ========== Sidebar ========== */
+        .sidebar-box {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .sidebar-box-title {
+            background: #0056b3;
+            color: #fff;
+            padding: 12px 18px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .sidebar-box-content {
+            padding: 15px 18px;
+        }
+        .sidebar-box-content a {
+            display: block;
+            padding: 8px 0;
+            font-size: 14px;
+            color: #555;
+            border-bottom: 1px dashed #eee;
+            transition: all 0.3s;
+        }
+        .sidebar-box-content a:last-child {
+            border-bottom: none;
+        }
+        .sidebar-box-content a:hover {
+            color: #0056b3;
+            padding-left: 5px;
+        }
+        .sidebar-hotline {
+            text-align: center;
+            padding: 20px 18px;
+        }
+        .sidebar-hotline .hotline-label {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .sidebar-hotline .hotline-number {
+            font-size: 22px;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+        .sidebar-hotline .hotline-note {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* ========== About Tab Navigation ========== */
+        .about-tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+        .about-tab-link {
+            padding: 12px 22px;
+            font-size: 15px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .about-tab-link:hover {
+            color: #0056b3;
+            background: #e0e0e0;
+        }
+        .about-tab-link.active {
+            background: #0056b3;
+            color: #fff;
+        }
+
+        /* ========== About Section Panels ========== */
+        .about-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .about-section.active {
+            display: block;
+        }
+
+        /* ========== About Section - Company Intro ========== */
+        .intro-text {
+            line-height: 1.9;
+            font-size: 15px;
+            color: #555;
+        }
+        .intro-text p {
+            margin-bottom: 14px;
+        }
+        .intro-text .highlight {
+            color: #0056b3;
+            font-weight: 600;
+        }
+        .intro-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        .intro-stat {
+            text-align: center;
+        }
+        .intro-stat .intro-stat-num {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0056b3;
+        }
+        .intro-stat .intro-stat-unit {
+            font-size: 14px;
+            color: #999;
+        }
+        .intro-stat .intro-stat-label {
+            font-size: 14px;
+            color: #888;
+            margin-top: 6px;
+        }
+        .wuhan-info {
+            margin-top: 30px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 25px;
+            border: 1px solid #eee;
+        }
+        .wuhan-info h3 {
+            font-size: 18px;
+            color: #0056b3;
+            margin-bottom: 10px;
+        }
+        .wuhan-info p {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* ========== About Section - Patents ========== */
+        .patents-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .patent-card {
+            background: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .patent-card:hover {
+            border-color: #0056b3;
+            box-shadow: 0 4px 15px rgba(0,86,179,0.1);
+            transform: translateY(-3px);
+        }
+        .patent-card .patent-icon {
+            font-size: 32px;
+            color: #0056b3;
+            margin-bottom: 12px;
+        }
+        .patent-card h4 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .patent-card p {
+            font-size: 13px;
+            color: #888;
+        }
+
+        /* ========== About Section - Clients ========== */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+        .client-card {
+            background: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 20px 15px;
+            text-align: center;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+        .client-card:hover {
+            border-color: #0056b3;
+            box-shadow: 0 4px 15px rgba(0,86,179,0.1);
+            transform: translateY(-3px);
+        }
+        .client-card img {
+            width: 100%;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        .client-card span {
+            font-size: 15px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        /* ========== About Section - Timeline ========== */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #0056b3;
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            display: flex;
+            align-items: stretch;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background: #0056b3;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 0 0 3px rgba(0,86,179,0.2);
+        }
+        .timeline-content {
+            width: 45%;
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 20px 25px;
+            border: 1px solid #eee;
+            transition: all 0.3s;
+        }
+        .timeline-content:hover {
+            border-color: #0056b3;
+            box-shadow: 0 4px 15px rgba(0,86,179,0.1);
+        }
+        .timeline-year {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0056b3;
+            margin-bottom: 8px;
+        }
+        .timeline-content h4 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        .timeline-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.7;
+        }
+        .timeline-spacer {
+            width: 45%;
+        }
+
+        /* ========== About Section - Advantages ========== */
+        .about-advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        .about-adv-card {
+            background: #f8f9fa;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+        .about-adv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .about-adv-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        .about-adv-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .about-adv-card:hover .about-adv-img img {
+            transform: scale(1.05);
+        }
+        .about-adv-text {
+            padding: 20px;
+        }
+        .about-adv-text h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .about-adv-text p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* ========== About Section - Production Gallery ========== */
+        .production-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .gallery-item {
+            background: #f8f9fa;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-item h4 {
+            padding: 12px 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* ========== About Section - Contact ========== */
+        .contact-layout {
+            display: flex;
+            gap: 30px;
+        }
+        .contact-info {
+            flex: 1;
+        }
+        .contact-info h3 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 18px;
+            font-size: 15px;
+            color: #555;
+        }
+        .contact-info-item .info-label {
+            flex: 0 0 70px;
+            font-weight: 600;
+            color: #333;
+        }
+        .contact-info-item .info-value {
+            flex: 1;
+        }
+        .contact-info-item .info-value a {
+            color: #0056b3;
+        }
+        .contact-form-box {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 30px;
+            border: 1px solid #eee;
+        }
+        .contact-form-box h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-group {
+            flex: 1;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #0056b3;
+        }
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .form-submit {
+            display: inline-block;
+            padding: 12px 40px;
+            background: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            align-self: flex-start;
+        }
+        .form-submit:hover {
+            background: #004494;
+        }
+
+        /* ========== Responsive adjustments ========== */
+        @media (max-width: 992px) {
+            .sub-page-layout { flex-direction: column; }
+            .sub-sidebar { flex: none; width: 100%; }
+            .sub-banner { height: 220px; }
+            .sub-banner-overlay h2 { font-size: 28px; }
+            .intro-stats { gap: 25px; }
+            .patents-list { grid-template-columns: repeat(2, 1fr); }
+            .clients-grid { grid-template-columns: repeat(3, 1fr); }
+            .timeline::before { left: 30px; }
+            .timeline-dot { left: 30px; }
+            .timeline-item,
+            .timeline-item:nth-child(even) { flex-direction: row; }
+            .timeline-content { width: auto; margin-left: 60px; }
+            .timeline-spacer { display: none; }
+            .contact-layout { flex-direction: column; }
+            .about-advantages-grid { grid-template-columns: repeat(2, 1fr); }
+            .production-gallery { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .sub-banner { height: 180px; }
+            .sub-banner-overlay h2 { font-size: 22px; }
+            .about-tabs-nav { overflow-x: auto; }
+            .about-tab-link { padding: 10px 14px; font-size: 13px; white-space: nowrap; }
+            .intro-stats { flex-wrap: wrap; gap: 15px; }
+            .patents-list { grid-template-columns: 1fr; }
+            .clients-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-advantages-grid { grid-template-columns: 1fr; }
+            .production-gallery { grid-template-columns: repeat(2, 1fr); }
+            .form-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 顶部工具栏 -->
+<div class="top-bar">
+    <div class="container">
+        <div class="top-bar-left">
+            <span class="hot-keywords">热门关键词：</span>
+            <a href="../index.html#moju">模具设计制造</a>
+            <a href="../index.html#zhusu">注塑加工量产</a>
+            <a href="../index.html#zhusu">组装加工装配</a>
+        </div>
+        <div class="top-bar-right">
+            <a href="#sitemap">网站地图</a>
+            <a href="#about-07">在线留言</a>
+            <a href="#about-07">联系我们</a>
+        </div>
+    </div>
+</div>
+
+<!-- 主头部：Logo + 电话 -->
+<header class="main-header">
+    <div class="container">
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../images/logo.png" alt="XXXXXX塑胶制品科技有限公司">
+                <span class="logo-text">XXXXXX塑胶制品科技有限公司</span>
+            </a>
+        </div>
+        <div class="header-phone">
+            <img src="../images/phone-icon.png" alt="电话图标">
+            <div class="phone-info">
+                <span class="phone-number">13929464938</span>
+                <span class="phone-note">(微信同号)</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 主导航栏 -->
+<nav class="main-nav">
+    <div class="container">
+        <button class="menu-toggle" id="menuToggle" aria-label="菜单">☰</button>
+        <ul class="nav-list" id="navList">
+            <li><a href="../index.html">网站首页</a></li>
+            <li><a href="../index.html#moju">模具制造</a></li>
+            <li><a href="../index.html#zhusu">注塑加工</a></li>
+            <li><a href="../index.html#product">小家电</a></li>
+            <li><a href="../index.html#case">汽车用品</a></li>
+            <li><a href="../index.html#yiliao">医疗用品</a></li>
+            <li><a href="../index.html#zhineng">智能家居</a></li>
+            <li><a href="../index.html#other">亚克力产品</a></li>
+            <li><a href="../index.html#video">技术方案</a></li>
+            <li class="has-dropdown">
+                <a href="../index.html#news">新闻资讯</a>
+                <ul class="dropdown">
+                    <li><a href="../index.html#company-news">公司新闻</a></li>
+                    <li><a href="../index.html#industry-news">行业动态</a></li>
+                    <li><a href="../index.html#faq">常见问题</a></li>
+                </ul>
+            </li>
+            <li class="has-dropdown active">
+                <a href="index.html">关于XXXXXX</a>
+                <ul class="dropdown">
+                    <li><a href="#about-01">公司简介</a></li>
+                    <li><a href="#about-02">专利证书</a></li>
+                    <li><a href="#about-03">合作客户</a></li>
+                    <li><a href="#about-04">发展历程</a></li>
+                    <li><a href="#about-05">公司优势</a></li>
+                    <li><a href="#about-06">生产环境</a></li>
+                    <li><a href="#about-07">联系我们</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Banner -->
+<section class="sub-banner">
+    <img src="../images/banner-about.jpg" alt="关于XXXXXX">
+    <div class="sub-banner-overlay">
+        <h2>关于XXXXXX</h2>
+    </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="../index.html">首页</a>
+        <span class="sep">&gt;</span>
+        <span>关于XXXXXX</span>
+    </div>
+</div>
+
+<!-- Main Content Area -->
+<div class="sub-page-layout">
+    <div class="container" style="display:flex;gap:30px;">
+        <!-- Sidebar -->
+        <aside class="sub-sidebar">
+            <div class="sidebar-box">
+                <div class="sidebar-box-title">产品定制</div>
+                <div class="sidebar-box-content">
+                    <a href="../index.html#moju">模具设计制造</a>
+                    <a href="../index.html#zhusu">注塑加工量产</a>
+                    <a href="../index.html#zhusu">组装加工装配</a>
+                    <a href="../index.html#product">小家电产品</a>
+                    <a href="../index.html#case">汽车用品</a>
+                    <a href="../index.html#yiliao">医疗用品</a>
+                    <a href="../index.html#zhineng">智能家居</a>
+                    <a href="../index.html#other">亚克力产品</a>
+                </div>
+            </div>
+            <div class="sidebar-box">
+                <div class="sidebar-box-title">全国服务热线</div>
+                <div class="sidebar-hotline">
+                    <div class="hotline-label">7x24小时服务</div>
+                    <div class="hotline-number">13929464938</div>
+                    <div class="hotline-note">(微信同号)</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="sub-main">
+            <!-- Tab Navigation -->
+            <div class="about-tabs-nav">
+                <a class="about-tab-link active" data-tab="about-01" href="#about-01">公司简介</a>
+                <a class="about-tab-link" data-tab="about-02" href="#about-02">专利证书</a>
+                <a class="about-tab-link" data-tab="about-03" href="#about-03">合作客户</a>
+                <a class="about-tab-link" data-tab="about-04" href="#about-04">发展历程</a>
+                <a class="about-tab-link" data-tab="about-05" href="#about-05">公司优势</a>
+                <a class="about-tab-link" data-tab="about-06" href="#about-06">生产环境</a>
+                <a class="about-tab-link" data-tab="about-07" href="#about-07">联系我们</a>
+            </div>
+
+            <!-- Section: 公司简介 -->
+            <section class="about-section active" id="about-01">
+                <div class="section-header">
+                    <h2 class="section-title">公司简介</h2>
+                    <p class="section-subtitle">Company Profile</p>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="intro-text">
+                    <p>XXXXXX塑胶制品科技有限公司是一家集<span class="highlight">模具设计制造、注塑加工、组装加工</span>于一体的高新技术企业，专注于小家电、医疗用品、汽车用品、智能家居等产品的OEM/ODM一站式解决方案。</p>
+                    <p>公司成立于2000年，历经20多年的发展，拥有现代化生产设备和完善的质量检测体系，为客户提供从产品设计到成品交付的全流程服务。</p>
+                </div>
+                <div class="intro-stats">
+                    <div class="intro-stat">
+                        <div class="intro-stat-num">20<span class="intro-stat-unit">多年</span></div>
+                        <div class="intro-stat-label">行业经验</div>
+                    </div>
+                    <div class="intro-stat">
+                        <div class="intro-stat-num">20000<span class="intro-stat-unit">㎡</span></div>
+                        <div class="intro-stat-label">自建厂房</div>
+                    </div>
+                    <div class="intro-stat">
+                        <div class="intro-stat-num">36<span class="intro-stat-unit">人</span></div>
+                        <div class="intro-stat-label">研发技术团队</div>
+                    </div>
+                    <div class="intro-stat">
+                        <div class="intro-stat-num">150<span class="intro-stat-unit">人</span></div>
+                        <div class="intro-stat-label">生产人员</div>
+                    </div>
+                </div>
+                <div class="wuhan-info">
+                    <h3>武汉分公司</h3>
+                    <p>武汉市XXXXXX智能家居用品有限公司，位于湖北省咸宁市，专注于大批量定制塑胶产品制造。规划面积18000平方米，配备先进自动化生产线，致力于为客户提供高品质、高效率的塑胶产品加工服务。</p>
+                </div>
+            </section>
+
+            <!-- Section: 专利证书 -->
+            <section class="about-section" id="about-02">
+                <div class="section-header">
+                    <h2 class="section-title">专利证书</h2>
+                    <p class="section-subtitle">Patents & Certifications</p>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="patents-list">
+                    <div class="patent-card">
+                        <div class="patent-icon">&#9989;</div>
+                        <h4>SGS认证</h4>
+                        <p>通过SGS国际认证，产品质量符合国际标准</p>
+                    </div>
+                    <div class="patent-card">
+                        <div class="patent-icon">&#9989;</div>
+                        <h4>BSCI认证</h4>
+                        <p>符合BSCI商业社会责任标准，保障生产合规</p>
+                    </div>
+                    <div class="patent-card">
+                        <div class="patent-icon">&#9989;</div>
+                        <h4>ISO 9001认证</h4>
+                        <p>ISO质量管理体系认证，确保品质管控流程</p>
+                    </div>
+                    <div class="patent-card">
+                        <div class="patent-icon">&#9733;</div>
+                        <h4>高新技术企业</h4>
+                        <p>荣获高新技术企业认定，持续技术创新</p>
+                    </div>
+                    <div class="patent-card">
+                        <div class="patent-icon">&#9733;</div>
+                        <h4>多项发明专利</h4>
+                        <p>拥有模具设计及注塑工艺相关发明专利</p>
+                    </div>
+                    <div class="patent-card">
+                        <div class="patent-icon">&#9733;</div>
+                        <h4>实用新型专利</h4>
+                        <p>多项实用新型专利覆盖生产制造关键环节</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 合作客户 -->
+            <section class="about-section" id="about-03">
+                <div class="section-header">
+                    <h2 class="section-title">合作客户</h2>
+                    <p class="section-subtitle">Cooperation Clients</p>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="clients-grid">
+                    <div class="client-card">
+                        <img src="../images/brand-huawei.jpg" alt="华为">
+                        <span>华为</span>
+                    </div>
+                    <div class="client-card">
+                        <img src="../images/brand-ykk.jpg" alt="YKK">
+                        <span>YKK</span>
+                    </div>
+                    <div class="client-card">
+                        <img src="../images/brand-panasonic.jpg" alt="松下">
+                        <span>松下</span>
+                    </div>
+                    <div class="client-card">
+                        <img src="../images/brand-dyg.jpg" alt="东阳光药">
+                        <span>东阳光药</span>
+                    </div>
+                    <div class="client-card">
+                        <img src="../images/brand-swarovski.jpg" alt="施华洛世奇">
+                        <span>施华洛世奇</span>
+                    </div>
+                    <div class="client-card">
+                        <img src="../images/brand-gionee.jpg" alt="GIONEE">
+                        <span>GIONEE</span>
+                    </div>
+                    <div class="client-card">
+                        <img src="../images/brand-saraya.jpg" alt="SARAYA">
+                        <span>SARAYA</span>
+                    </div>
+                    <div class="client-card">
+                        <img src="../images/brand-yuyue.jpg" alt="鱼跃集团">
+                        <span>鱼跃集团</span>
+                    </div>
+                    <div class="client-card">
+                        <img src="../images/brand-skyworth.jpg" alt="创维">
+                        <span>创维</span>
+                    </div>
+                    <div class="client-card">
+                        <img src="../images/brand-vivo.jpg" alt="VIVO">
+                        <span>VIVO</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 发展历程 -->
+            <section class="about-section" id="about-04">
+                <div class="section-header">
+                    <h2 class="section-title">发展历程</h2>
+                    <p class="section-subtitle">Development History</p>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2000</div>
+                            <h4>公司成立</h4>
+                            <p>XXXXXX塑胶制品科技有限公司正式成立，开始模具设计与制造业务，踏上行业发展之路。</p>
+                        </div>
+                        <div class="timeline-spacer"></div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-spacer"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2005</div>
+                            <h4>规模扩张</h4>
+                            <p>厂房扩建，引进先进注塑设备，业务范围从模具制造拓展至注塑加工与组装加工，形成一站式服务能力。</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2010</div>
+                            <h4>品质认证</h4>
+                            <p>通过SGS、BSCI、ISO 9001等多项国际认证，建立完善的质量检测体系，品质管控迈上新台阶。</p>
+                        </div>
+                        <div class="timeline-spacer"></div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-spacer"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year">2015</div>
+                            <h4>武汉分公司</h4>
+                            <p>成立武汉市XXXXXX智能家居用品有限公司，规划面积18000平方米，进一步扩大产能与服务范围。</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2020</div>
+                            <h4>持续发展</h4>
+                            <p>荣获高新技术企业认定，持续加大研发投入，拓展智能家居与医疗用品领域，为客户提供更全面的解决方案。</p>
+                        </div>
+                        <div class="timeline-spacer"></div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 公司优势 -->
+            <section class="about-section" id="about-05">
+                <div class="section-header">
+                    <h2 class="section-title">公司优势</h2>
+                    <p class="section-subtitle">Company Advantages</p>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="about-advantages-grid">
+                    <div class="about-adv-card">
+                        <div class="about-adv-img">
+                            <img src="../images/adv-01.jpg" alt="自动化设备齐全">
+                        </div>
+                        <div class="about-adv-text">
+                            <h3>自动化设备齐全</h3>
+                            <p>模具车间配备铣床、车床、磨床、线切割、火花机、CNC等加工设备；60台注塑机（90T-1000T），实现全自动化生产。</p>
+                        </div>
+                    </div>
+                    <div class="about-adv-card">
+                        <div class="about-adv-img">
+                            <img src="../images/adv-02.jpg" alt="20多年生产经验">
+                        </div>
+                        <div class="about-adv-text">
+                            <h3>20多年生产经验</h3>
+                            <p>通过SGS、BSCI、ISO等认证，完善的质量检测体系，专业管理团队确保产品品质稳定。</p>
+                        </div>
+                    </div>
+                    <div class="about-adv-card">
+                        <div class="about-adv-img">
+                            <img src="../images/adv-03.jpg" alt="品质有保证">
+                        </div>
+                        <div class="about-adv-text">
+                            <h3>品质有保证</h3>
+                            <p>配备2D/3D扫描仪等精密测量设备，专业QA团队全程品质管控，确保产品零缺陷交付。</p>
+                        </div>
+                    </div>
+                    <div class="about-adv-card">
+                        <div class="about-adv-img">
+                            <img src="../images/adv-04.jpg" alt="一站式服务">
+                        </div>
+                        <div class="about-adv-text">
+                            <h3>一站式服务</h3>
+                            <p>开模、注塑、组装、丝印、移印全部整合在一条生产线，为客户提供高效便捷的完整解决方案。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 生产环境 -->
+            <section class="about-section" id="about-06">
+                <div class="section-header">
+                    <h2 class="section-title">生产环境</h2>
+                    <p class="section-subtitle">Production Environment</p>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="production-gallery">
+                    <div class="gallery-item">
+                        <img src="../images/adv-01.jpg" alt="模具车间">
+                        <h4>模具车间</h4>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/adv-02.jpg" alt="CNC车间">
+                        <h4>CNC车间</h4>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/adv-03.jpg" alt="线切割车间">
+                        <h4>线切割车间</h4>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/adv-04.jpg" alt="注塑车间">
+                        <h4>注塑车间</h4>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/adv-01.jpg" alt="亚克力无尘车间">
+                        <h4>亚克力无尘车间</h4>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/adv-02.jpg" alt="装配车间">
+                        <h4>装配车间</h4>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/adv-03.jpg" alt="丝印车间">
+                        <h4>丝印车间</h4>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../images/adv-04.jpg" alt="移印车间">
+                        <h4>移印车间</h4>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: 联系我们 -->
+            <section class="about-section" id="about-07">
+                <div class="section-header">
+                    <h2 class="section-title">联系我们</h2>
+                    <p class="section-subtitle">Contact Us</p>
+                    <div class="title-decoration"></div>
+                </div>
+                <div class="contact-layout">
+                    <div class="contact-info">
+                        <h3>XXXXXX塑胶制品科技有限公司</h3>
+                        <div class="contact-info-item">
+                            <span class="info-label">电话：</span>
+                            <span class="info-value">0769-85348387</span>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="info-label">手机：</span>
+                            <span class="info-value"><a href="tel:13929464938">13929464938</a> (微信同号)</span>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="info-label">传真：</span>
+                            <span class="info-value">85348397</span>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="info-label">邮箱：</span>
+                            <span class="info-value"><a href="mailto:xhyw08@gdxiehong.com">xhyw08@gdxiehong.com</a></span>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="info-label">地址：</span>
+                            <span class="info-value">东莞市长安镇振安科技园XXXXXX厂</span>
+                        </div>
+                    </div>
+                    <div class="contact-form-box">
+                        <h3>在线留言</h3>
+                        <form class="contact-form" action="#" method="post">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">姓名</label>
+                                    <input type="text" id="name" name="name" placeholder="请输入您的姓名">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">联系电话</label>
+                                    <input type="tel" id="phone" name="phone" placeholder="请输入您的联系电话">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">电子邮箱</label>
+                                <input type="email" id="email" name="email" placeholder="请输入您的电子邮箱">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">留言内容</label>
+                                <textarea id="message" name="message" placeholder="请输入您的留言内容"></textarea>
+                            </div>
+                            <button type="submit" class="form-submit">提交留言</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<!-- 友情链接 -->
+<section class="friendly-links">
+    <div class="container">
+        <h3>友情链接</h3>
+        <div class="links-list">
+            <a href="#">接触角测量仪</a>
+            <a href="#">亚克力注塑</a>
+            <a href="#">锌合金压铸</a>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-columns">
+            <div class="footer-col">
+                <h4>XXXXXX塑胶制品科技有限公司</h4>
+                <p><span class="label">电话：</span>0769-85348387</p>
+                <p><span class="label">手机：</span>13929464938 (微信同号)</p>
+                <p><span class="label">传真：</span>85348397</p>
+                <p><span class="label">邮箱：</span>xhyw08@gdxiehong.com</p>
+                <p><span class="label">联系地址：</span>东莞市长安镇振安科技园XXXXXX厂</p>
+            </div>
+            <div class="footer-col">
+                <h4>底部导航</h4>
+                <a href="../index.html#zhusu">注塑加工</a>
+                <a href="../index.html#moju">模具制造</a>
+                <a href="../index.html#yiliao">医疗用品</a>
+                <a href="../index.html#case">汽车用品</a>
+                <a href="index.html">关于我们</a>
+                <a href="#about-07">在线留言</a>
+                <a href="#about-07">联系我们</a>
+            </div>
+            <div class="footer-col">
+                <h4>热门关键词</h4>
+                <a href="#">模具设计制造</a>
+                <a href="#">注塑加工量产</a>
+                <a href="#">组装加工装配</a>
+            </div>
+            <div class="footer-col footer-qr">
+                <h4>微信咨询</h4>
+                <div class="qr-code">
+                    <img src="../images/wechat-qr.png" alt="微信二维码">
+                </div>
+                <p>扫一扫添加微信</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>Copyright &copy; 2021 XXXXXX塑胶制品科技有限公司 版权所有</p>
+            <p><a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备07012005号</a> | 技术支持：<a href="#">米可网络</a></p>
+        </div>
+    </div>
+</footer>
+
+<!-- 侧边浮动工具栏 -->
+<div class="floating-toolbar">
+    <a href="#" class="float-btn back-top" id="backTop" title="返回顶部">
+        <span>&#8593;</span>
+        <small>返回顶部</small>
+    </a>
+    <a href="tel:13929464938" class="float-btn phone-btn" title="电话咨询">
+        <span>&#9742;</span>
+        <small>13929464938<br>(微信同号)</small>
+    </a>
+    <a href="#" class="float-btn qq-btn" title="QQ在线咨询">
+        <span>QQ</span>
+        <small>在线咨询</small>
+    </a>
+    <div class="float-btn wechat-btn" title="微信咨询">
+        <span>微</span>
+        <small>微信咨询</small>
+        <div class="wechat-popup">
+            <img src="../images/wechat-qr.png" alt="微信二维码">
+            <p>扫码添加微信</p>
+        </div>
+    </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script>
+    // About page tab switching
+    (function() {
+        var tabLinks = document.querySelectorAll('.about-tab-link');
+        var sections = document.querySelectorAll('.about-section');
+
+        function switchTab(targetId) {
+            // Update tab links
+            tabLinks.forEach(function(link) {
+                link.classList.remove('active');
+                if (link.getAttribute('data-tab') === targetId) {
+                    link.classList.add('active');
+                }
+            });
+            // Update sections
+            sections.forEach(function(sec) {
+                sec.classList.remove('active');
+                if (sec.id === targetId) {
+                    sec.classList.add('active');
+                }
+            });
+        }
+
+        // Click handler for tab links
+        tabLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var targetId = this.getAttribute('data-tab');
+                switchTab(targetId);
+                // Scroll to the tab area
+                document.querySelector('.about-tabs-nav').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // If URL has an anchor hash, activate that tab on load
+        if (window.location.hash) {
+            var hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                switchTab(hash);
+            }
+        }
+
+        // Dropdown nav links should also switch tabs
+        var dropdownLinks = document.querySelectorAll('.nav-list .has-dropdown.active .dropdown a');
+        dropdownLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var targetId = this.getAttribute('href').substring(1);
+                switchTab(targetId);
+                document.querySelector('.about-tabs-nav').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    })();
+</script>
+</body>
+</html>
